@@ -65,7 +65,7 @@ namespace Extentions.WebForms
             }
         }
         
-        public IEnumerable<T> GetDataKeyValuesFromGridItemCollection<T>(GridItemCollection items, string dataKeyValye)
+        public static IEnumerable<T> GetDataKeyValuesFromGridItemCollection<T>(this GridItemCollection items, string dataKeyValye)
         {
             if (items == null)
             {
