@@ -64,5 +64,24 @@ namespace Extentions.WebForms
                 return root.FindControlRecursive(controlID);
             }
         }
+        
+        public IEnumerable<T> GetDataKeyValuesFromGridItemCollection<T>(GridItemCollection items, string dataKeyValye)
+        {
+            if (items == null)
+            {
+                return default(List<T>);
+            }
+
+            List<T> selectedValues = new List<T>();
+
+            foreach (GridDataItem item in items)
+            {
+                object selected = item.GetDataKeyValue(dataKeyValye);
+                T converted = (T)selected;
+                selectedValues.Add(converted);
+            }
+
+            return selectedValues;
+        }
     }
 }
