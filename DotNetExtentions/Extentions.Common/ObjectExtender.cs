@@ -119,5 +119,30 @@ namespace Extentions.Common
                 }
             }
         }
+        
+        public static string UpFirstLetter(this string str)
+        {
+            if (str == null)
+            {
+                throw new ArgumentNullException("UpFirstLettr");
+            }
+            if (string.IsNullOrEmpty(str.Trim()))
+            {
+                throw new ArgumentException("UpFirstLettr: argument is null or empty");
+            }
+
+            return str.First().ToString().ToUpper() + string.Join("", str.Skip(1));
+        }
+        
+        public static string ToString(this DateTime? dateTime, string format)
+        {
+            if (dateTime == null)
+            {
+                return null;
+            }
+
+            DateTime parsed = dateTime.Value;
+            return parsed.ToString(format);
+        }
     }
 }
