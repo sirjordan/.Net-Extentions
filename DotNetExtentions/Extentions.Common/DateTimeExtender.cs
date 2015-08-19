@@ -24,5 +24,16 @@ namespace Extentions.Common
 
             return result;
         }
+        
+        public static string ToString(this DateTime? dateTime, string format)
+        {
+            if (dateTime == null)
+            {
+                return null;
+            }
+
+            DateTime parsed = dateTime.Value;
+            return parsed.ToString(format);
+        }
     }
 }
