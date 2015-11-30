@@ -6,7 +6,7 @@ using System.Reflection;
 namespace Extentions.Common
 {
     public static class ObjectExtender
-    {
+    { 
         /// <summary>
         /// Copy the equal property values from original object to receiver.
         /// Copy only value type properties (and string) with same name and type.
