@@ -8,37 +8,35 @@ namespace Extentions.WebForms
     public static class ControlExtender
     {
         /// <summary>
-        /// Recursively finds controls of Type T, started from the root.
+        /// Finds controls of Type T, started from the root and search all child controls.
         /// </summary>
         /// <typeparam name="T">Type of the returned controls</typeparam>
         /// <param name="root">Root control to starts from</param>
-        public static IEnumerable<T> GetControlsRecursive<T>(this Control root) where T : Control
+        public static IEnumerable<T> GetControls<T>(this Control root) where T : Control
         {
-            foreach (T control in root.Controls.OfType<T>())
+            List<T> found = new List<T>();
+            Queue<Control> controls = new Queue<Control>(root.Controls.Cast<Control>());
+            
+            while (controls.Count > 0)
             {
-                yield return (T)control;
-
-                if (control.HasControls())
+                Control ctlr = controls.Dequeue();
+                if (ctlr is T)
                 {
-                    foreach (T childControl in GetControls<T>(control))
+                    found.Add(ctlr as T);
+                }
+                else
+                {
+                    if (ctlr.HasControls())
                     {
-                        yield return childControl;
+                        foreach (Control control in ctlr.Controls)
+                        {
+                            controls.Enqueue(control);
+                        }
                     }
                 }
             }
-        }
 
-        /// <summary>
-        /// Finds controls of Type T.
-        /// </summary>
-        /// <typeparam name="T">Type of the returned controls</typeparam>
-        /// <param name="controlToSearch">Control to search</param>
-        public static IEnumerable<T> GetControls<T>(this Control controlToSearch) where T : Control
-        {
-            foreach (T child in controlToSearch.Controls.OfType<T>())
-            {
-                yield return (T)child;
-            }
+            return found;
         }
 
         /// <summary>
